@@ -3,26 +3,45 @@
 import { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
+import { ThemeProvider } from "./ThemeProvider";
 
 export default function ClientRootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const toggleSidebar = () => setIsExpanded(!isExpanded);
+    const [keepExpanded, setKeepExpanded] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
 
-  return (
-    <div className="flex min-h-screen">
-      <Sidebar />
-      <div
-        className={`flex-1 transition-all duration-300 ease-in-out ${
-          isExpanded ? "ml-64" : "ml-16"
-        }`}
-      >
-        <Navbar />
-        <main className="p-6">{children}</main>
-      </div>
-    </div>
-  );
+    // The sidebar is open if the "keep expanded" button is clicked OR the user is hovering
+    const isSidebarOpen = keepExpanded || isHovered;
+
+    const toggleKeepExpanded = () => setKeepExpanded(!keepExpanded);
+
+    return (
+        <ThemeProvider>
+            <div className="flex min-h-screen">
+                {/* Pass state and handlers down to the Sidebar */}
+                <Sidebar
+                    isSidebarOpen={isSidebarOpen}
+                    toggleKeepExpanded={toggleKeepExpanded}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                />
+
+                <div
+                    className={`flex-1 transition-all duration-300 ease-in-out ${isSidebarOpen ? 'ml-64' : 'ml-16'
+                        }`}
+                >
+                    <Navbar />
+
+                    <main className="p-6">
+                        {children}
+                    </main>
+                </div>
+            </div>
+
+        </ThemeProvider>
+
+    );
 }

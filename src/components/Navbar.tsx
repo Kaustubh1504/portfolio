@@ -1,48 +1,103 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { FiPlus, FiLogOut, FiCamera, FiChevronDown } from 'react-icons/fi';
+import ProfileDropdown from './ProfileDropdown'; // Import the new ProfileDropdown component
 
-const Navbar = ({ userProfileImage = '/user-profile.jpg' }) => {
+// Define the props for the Navbar component.
+// userProfileImage is optional and defaults to the new, correct path for the public folder.
+const Navbar = ({ userProfileImage = '/photo.jpg' }) => {
+  // State to manage the visibility of the profile dropdown.
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // State to track if the user has scrolled down the page.
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // A ref to the navbar container to detect clicks outside of it.
+  const navbarRef = useRef(null);
+
+  // useEffect to handle scroll events and update the `isScrolled` state.
+  useEffect(() => {
+    const handleScroll = () => {
+      // Check if the vertical scroll position is greater than 0.
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    // Add the scroll event listener to the window.
+    window.addEventListener('scroll', handleScroll);
+
+    // Clean up the event listener when the component unmounts.
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  // The handleClickOutside logic is now handled within ProfileDropdown itself,
+  // but we still need a ref for the Navbar to ensure clicks outside the entire navbar close the dropdown
+  // if it's open. The ProfileDropdown will handle its own internal clicks.
+  useEffect(() => {
+    const handleClickOutsideNavbar = (event) => {
+      if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutsideNavbar);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutsideNavbar);
+    };
+  }, [navbarRef]);
+
+
   return (
-    // The `sticky` class is useful for a navbar that sticks to the top of its parent container.
-    <header className="bg-white shadow-sm h-16 flex items-center justify-between px-6 sticky top-0 z-40">
-      
-      {/* Left section: Logo */}
-      <div className="flex items-center">
-        <div className="w-10 h-10 rounded-full bg-blue-500 text-white font-bold flex items-center justify-center text-xl cursor-pointer">
-          G
+    // The header has a conditional background and shadow based on the scroll position.
+    // It is sticky, transparent, and uses a backdrop blur for a modern "frosted glass" effect.
+    <header
+      ref={navbarRef}
+      className={`
+        h-16 flex items-center justify-between px-6 sticky top-0 z-40
+        transition-all duration-300 ease-in-out bg-transparent
+      `}
+    > 
+      {/* Left section: Logo and Profile Info */}
+      <div className="flex items-center space-x-4">
+        {/* The updated logo with a border and a pulse animation on hover. */}
+        <div className="w-10 h-10 rounded-full  text-white font-bold flex items-center justify-center text-md cursor-pointer border-2 border-gray-300 dark:border-gray-600 hover:scale-105 transition-transform duration-300 ease-in-out hover:shadow-lg">
+          KG
+        </div>
+        <div className="flex flex-col">
+          <h1 className="text-lg font-bold text-gray-900 dark:text-gray-400">Kaustubh Gharat</h1>
+          {/* The "Full Stack Developer" text is now in a button with a typing animation. */}
+          <button className="flex items-center space-x-1 px-3 bg-gray-500 dark:bg-[#282a2c] rounded-full text-sm text-gray-500 dark:text-gray-500 font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200">
+            <span className="typing-container">
+              <span className="typing-text border-r-2 border-transparent pr-1">Full Stack Developer</span>
+            </span>
+          </button>
         </div>
       </div>
-
-      {/* Center section: Search Bar */}
-      <div className="flex-grow flex justify-center mx-8">
-        {/* We remove `group-hover:max-w-md` to stop the search bar from shrinking */}
-        <div className="relative w-full max-w-xl transition-all duration-300 ease-in-out">
-          <input
-            type="text"
-            placeholder="Search or ask anything..."
-            className="w-full bg-gray-100 py-2.5 pl-12 pr-4 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all duration-300"
-          />
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
-            🔍
-          </span>
-        </div>
-      </div>
-
-      {/* Right section: Actions and User Profile */}
-      {/* We remove all `group` and `hover` related classes from this section */}
+      {/* Right section: Actions and User Profile with Dropdown */}
       <div className="flex items-center space-x-2">
-        {/* The New Chat button no longer has a hover effect */}
-        <button className="w-10 h-10 rounded-full flex items-center justify-center text-gray-700 transition-colors duration-200">
-          ➕
-        </button>
-
-        {/* The user profile no longer has a hover-activated dropdown */}
-        <button className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center focus:outline-none">
-          <img 
-            src={userProfileImage} 
-            alt="User Profile" 
-            className="w-full h-full object-cover cursor-pointer" 
+        {/* User Profile with click-activated dropdown */}
+        <div className="relative">
+          <button 
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center focus:outline-none"
+          >
+            <img 
+              src={userProfileImage} 
+              alt="User Profile" 
+              className="w-full h-full object-cover cursor-pointer" 
+            />
+            {/* The new pulsing animation dot */}
+            <span className="absolute bottom-0 right-0 flex h-3 w-3">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
+              <span className="relative inline-flex h-3 w-3 rounded-full bg-red-500"></span>
+            </span>
+          </button>
+          
+          {/* Render the ProfileDropdown component */}
+          <ProfileDropdown 
+            userProfileImage={userProfileImage} 
+            isOpen={isDropdownOpen} 
+            onClose={() => setIsDropdownOpen(false)} 
           />
-        </button>
+        </div>
       </div>
     </header>
   );
