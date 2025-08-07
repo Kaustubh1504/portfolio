@@ -11,7 +11,7 @@ const FilterChip: React.FC<FilterChipProps> = ({ icon: Icon, text, color = 'text
   return (
     <button
       onClick={onClick}
-      className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#1b1c1d] text-gray-200 hover:bg-gray-700 transition-colors duration-200 border border-[#9a9b9c]"
+      className="flex items-center gap-2 px-4 py-2 rounded-full bg-transparent text-gray-200 hover:bg-gray-700 transition-colors duration-200 border border-[#9a9b9c]"
     >
       <Icon className={`${color}`} size={16} />
       <span>{text}</span>

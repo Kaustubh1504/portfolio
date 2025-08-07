@@ -10,7 +10,7 @@ import React, { useState } from "react";
 
 const ChatScreen = () => {
   const [started, setStarted] = useState(false);
-  const [inputMessage, setInputMessage] = useState("");     // typing
+  const [inputMessage, setInputMessage] = useState(""); // typing
   const [displayMessage, setDisplayMessage] = useState(""); // sent message
 
   const handleSend = () => {
@@ -31,7 +31,11 @@ const ChatScreen = () => {
 
   return (
     <div className="relative w-full h-[450px] overflow-hidden transition-all duration-700 font-sans">
-      {!started && <SplashCursor/>}
+      {!started && (
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <SplashCursor />
+        </div>
+      )}
       <div
         className={`transition-opacity duration-700 ease-in-out ${
           started ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -44,7 +48,7 @@ const ChatScreen = () => {
 
       {/* Landing Centered Content */}
       <div
-        className={`flex flex-col items-center justify-center text-center transition-all duration-700 ease-in-out absolute top-0 left-0 w-full h-full p-4 ${
+        className={`flex flex-col items-center justify-center text-center transition-all duration-700 ease-in-out absolute top-0 left-0 w-full h-full p-4 z-10 ${
           started
             ? "opacity-0 -translate-y-20 pointer-events-none"
             : "opacity-100 translate-y-0"
