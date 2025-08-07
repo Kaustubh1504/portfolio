@@ -132,6 +132,12 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ userProfileImage, isO
           );
         })}
       </div>
+
+      <div className="flex justify-center gap-4 text-xs text-gray-500 dark:text-gray-400 mt-4">
+        <a href="#" className="hover:underline">Privacy policy</a>
+        <span>•</span>
+        <a href="#" className="hover:underline">Terms of Service</a>
+      </div>
     </div>
   );
 };

@@ -21,7 +21,6 @@ export default function ClientRootLayout({
     return (
         <ThemeProvider>
             <div className="flex min-h-screen">
-                {/* Pass state and handlers down to the Sidebar */}
                 <Sidebar
                     isSidebarOpen={isSidebarOpen}
                     toggleKeepExpanded={toggleKeepExpanded}
@@ -29,13 +28,9 @@ export default function ClientRootLayout({
                     onMouseLeave={() => setIsHovered(false)}
                 />
 
-                <div
-                    className={`flex-1 transition-all duration-300 ease-in-out ${isSidebarOpen ? 'ml-64' : 'ml-16'
-                        }`}
-                >
+                <div className={`flex-1 transition-all duration-300 ease-in-out ${isSidebarOpen ? 'ml-64' : 'ml-16'}`}>
                     <Navbar />
-
-                    <main className="p-6">
+                    <main className="flex-1 min-h-0 flex flex-col p-6 overflow-hidden">
                         {children}
                     </main>
                 </div>

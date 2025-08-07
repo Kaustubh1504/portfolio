@@ -24,3 +24,32 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes gradient-move {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+        
+.animate-gradient {
+  animation: gradient-move 4s ease-in-out infinite;
+}
+
+/* Keyframes for the Google-colored cursor animation */
+@keyframes caret-pulse-google {
+  0%, 100% { caret-color: #4285F4; } /* Blue */
+  25% { caret-color: #DB4437; } /* Red */
+  50% { caret-color: #F4B400; } /* Yellow */
+  75% { caret-color: #0F9D58; } /* Green */
+}
+
+/* Class to apply the caret animation */
+.animated-caret-google {
+  animation: caret-pulse-google 4s ease-in-out infinite;
+}

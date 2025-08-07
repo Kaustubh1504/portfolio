@@ -51,10 +51,11 @@ const Navbar = ({ userProfileImage = '/photo.jpg' }) => {
     <header
       ref={navbarRef}
       className={`
-        h-16 flex items-center justify-between px-6 sticky top-0 z-40
-        transition-all duration-300 ease-in-out bg-transparent
-      `}
-    > 
+    sticky top-0 z-40 h-16 
+    bg-white dark:bg-[#1f1f1f]
+    flex items-center justify-between px-6
+  `}
+    >
       {/* Left section: Logo and Profile Info */}
       <div className="flex items-center space-x-4">
         {/* The updated logo with a border and a pulse animation on hover. */}
@@ -75,14 +76,14 @@ const Navbar = ({ userProfileImage = '/photo.jpg' }) => {
       <div className="flex items-center space-x-2">
         {/* User Profile with click-activated dropdown */}
         <div className="relative">
-          <button 
+          <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center focus:outline-none"
           >
-            <img 
-              src={userProfileImage} 
-              alt="User Profile" 
-              className="w-full h-full object-cover cursor-pointer" 
+            <img
+              src={userProfileImage}
+              alt="User Profile"
+              className="w-full h-full object-cover cursor-pointer"
             />
             {/* The new pulsing animation dot */}
             <span className="absolute bottom-0 right-0 flex h-3 w-3">
@@ -90,12 +91,12 @@ const Navbar = ({ userProfileImage = '/photo.jpg' }) => {
               <span className="relative inline-flex h-3 w-3 rounded-full bg-red-500"></span>
             </span>
           </button>
-          
+
           {/* Render the ProfileDropdown component */}
-          <ProfileDropdown 
-            userProfileImage={userProfileImage} 
-            isOpen={isDropdownOpen} 
-            onClose={() => setIsDropdownOpen(false)} 
+          <ProfileDropdown
+            userProfileImage={userProfileImage}
+            isOpen={isDropdownOpen}
+            onClose={() => setIsDropdownOpen(false)}
           />
         </div>
       </div>
