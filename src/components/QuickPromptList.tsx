@@ -3,11 +3,12 @@ import {
   FiChevronDown,
   FiChevronUp,
 } from "react-icons/fi";
-import FilterChip from "./filterchip";
+
 
 import { FiUser, FiBriefcase, FiFolder, FiAward, FiBookOpen, FiSmile, FiMail } from "react-icons/fi";
 import { AiOutlineBulb, AiOutlineStar } from "react-icons/ai";
 import { FaGraduationCap } from "react-icons/fa";
+import QuickLinkChip from "./QuickLinkChip";
 
 interface QuickPromptListProps {
   onPromptClick: (text: string) => void;
@@ -77,7 +78,7 @@ const QuickPromptList: React.FC<QuickPromptListProps> = ({ onPromptClick }) =>  
     <div className="flex flex-col items-center p-4">
       <div className="flex flex-wrap gap-2 w-[780px] justify-center p-2">
       {[...visibleChips, ...(showMore ? moreChips : [])].map((chip, index) => (
-        <FilterChip
+        <QuickLinkChip
           key={index}
           icon={chip.icon}
           text={chip.text}
@@ -86,7 +87,7 @@ const QuickPromptList: React.FC<QuickPromptListProps> = ({ onPromptClick }) =>  
         />
       ))}
 
-      <FilterChip
+      <QuickLinkChip
         icon={showMore ? FiChevronUp : FiChevronDown}
         text={showMore ? "Less" : "More"}
         color="text-gray-500"
