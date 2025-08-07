@@ -10,7 +10,7 @@ const ChatLayout = () => {
         <ChatMessages/>
       </div>
       <div className="fixed bottom-0 w-full max-w-2xl mx-auto left-0 right-0 px-4 pb-4 bg-black">
-        <ChatInput />
+        {/* <ChatInput /> */}
       </div>
     </div>
   );

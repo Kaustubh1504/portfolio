@@ -1,7 +1,6 @@
 "use client";
 import ChatInput from "@/components/ChatInput";
 import FilterChip from "@/components/filterChip";
-import FluidEffect from "@/components/FluidEffect";
 import WelcomeScreen from "@/components/WelcomeScreen";
 import React, { useState } from "react";
 import { FiCode, FiStar, FiFileText, FiCamera, FiBarChart2 } from 'react-icons/fi';

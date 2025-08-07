@@ -21,15 +21,15 @@ export const SettingsPopover = ({ onClose }: SettingsPopoverProps) => {
         onClose();
     };
 
-    const [colorTheme, setColorTheme] = useDarkSide();
-    const [darkSide, setDarkSide] = useState(
-        colorTheme === "light" ? true : false
-    );
+    // const [colorTheme, setColorTheme] = useDarkSide();
+    // const [darkSide, setDarkSide] = useState(
+    //     colorTheme === "light" ? true : false
+    // );
 
-    const toggleDarkMode = (checked:any) => {
-        // setColorTheme(colorTheme);
-        setDarkSide(checked);
-    };
+    // const toggleDarkMode = (checked:any) => {
+    //     // setColorTheme(colorTheme);
+    //     setDarkSide(checked);
+    // };
 
 
 

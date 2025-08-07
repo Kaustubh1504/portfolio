@@ -1,5 +1,4 @@
 import HomePage from "@/pages/ChatScreen";
-import Image from "next/image";
 
 export default function Home() {
   return (

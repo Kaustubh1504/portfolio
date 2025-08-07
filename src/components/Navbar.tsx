@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FiPlus, FiLogOut, FiCamera, FiChevronDown } from 'react-icons/fi';
 import ProfileDropdown from './ProfileDropdown'; // Import the new ProfileDropdown component
 
 // Define the props for the Navbar component.
@@ -11,12 +10,15 @@ const Navbar = ({ userProfileImage = '/photo.jpg' }) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   // A ref to the navbar container to detect clicks outside of it.
-  const navbarRef = useRef(null);
+  const navbarRef = useRef<HTMLDivElement>(null);
 
   // useEffect to handle scroll events and update the `isScrolled` state.
   useEffect(() => {
     const handleScroll = () => {
       // Check if the vertical scroll position is greater than 0.
+      if(isScrolled){
+        
+      }
       setIsScrolled(window.scrollY > 0);
     };
 
@@ -33,16 +35,17 @@ const Navbar = ({ userProfileImage = '/photo.jpg' }) => {
   // but we still need a ref for the Navbar to ensure clicks outside the entire navbar close the dropdown
   // if it's open. The ProfileDropdown will handle its own internal clicks.
   useEffect(() => {
-    const handleClickOutsideNavbar = (event) => {
-      if (navbarRef.current && !navbarRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutsideNavbar);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutsideNavbar);
-    };
-  }, [navbarRef]);
+  const handleClickOutsideNavbar = (event: MouseEvent) => {
+    if (navbarRef.current && !navbarRef.current.contains(event.target as Node)) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutsideNavbar);
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutsideNavbar);
+  };
+}, [navbarRef]);
 
 
   return (
