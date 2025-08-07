@@ -1,6 +1,5 @@
 import React from "react";
 import { FiMic, FiArrowUp } from "react-icons/fi";
-import StarBorder from "./reactbits/StarBorder";
 
 interface ChatInputProps {
   value: string;
