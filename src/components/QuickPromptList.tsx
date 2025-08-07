@@ -3,7 +3,7 @@ import {
   FiChevronDown,
   FiChevronUp,
 } from "react-icons/fi";
-import FilterChip from "./FilterChip";
+import FilterChip from "./filterchip";
 
 import { FiUser, FiBriefcase, FiFolder, FiAward, FiBookOpen, FiSmile, FiMail } from "react-icons/fi";
 import { AiOutlineBulb, AiOutlineStar } from "react-icons/ai";
