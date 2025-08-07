@@ -16,7 +16,7 @@ export default function ClientRootLayout({
     // The sidebar is open if the "keep expanded" button is clicked OR the user is hovering
     const isSidebarOpen = keepExpanded || isHovered;
 
-    const toggleKeepExpanded = () => setKeepExpanded(!keepExpanded);
+    const toggleKeepExpanded = () => setKeepExpanded(false);
 
     return (
         <ThemeProvider>
@@ -24,7 +24,7 @@ export default function ClientRootLayout({
                 <Sidebar
                     isSidebarOpen={isSidebarOpen}
                     toggleKeepExpanded={toggleKeepExpanded}
-                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseEnter={() => setIsHovered(false)}
                     onMouseLeave={() => setIsHovered(false)}
                 />
 

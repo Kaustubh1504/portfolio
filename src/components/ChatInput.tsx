@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiSend, FiMic, FiArrowUp } from 'react-icons/fi';
+import { FiMic, FiArrowUp } from 'react-icons/fi';
 
 interface ChatInputProps {
   value: string;

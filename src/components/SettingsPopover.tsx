@@ -1,7 +1,5 @@
 import { FiSun, FiMoon, FiMonitor } from "react-icons/fi";
 import { useTheme } from "./ThemeProvider"; // Import the useTheme hook
-import useDarkSide from "@/hooks/useDarkSide";
-import { useState } from "react";
 
 // Define the props for the SettingsPopover component.
 interface SettingsPopoverProps {

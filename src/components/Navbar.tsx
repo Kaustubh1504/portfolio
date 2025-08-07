@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import ProfileDropdown from './ProfileDropdown'; // Import the new ProfileDropdown component
+import React, { useState, useEffect, useRef } from "react";
+import ProfileDropdown from "./ProfileDropdown"; // Import the new ProfileDropdown component
+import Image from "next/image";
 
 // Define the props for the Navbar component.
 // userProfileImage is optional and defaults to the new, correct path for the public folder.
-const Navbar = ({ userProfileImage = '/photo.jpg' }) => {
+const Navbar = ({ userProfileImage = "/photo.jpg" }) => {
   // State to manage the visibility of the profile dropdown.
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   // State to track if the user has scrolled down the page.
@@ -16,18 +17,17 @@ const Navbar = ({ userProfileImage = '/photo.jpg' }) => {
   useEffect(() => {
     const handleScroll = () => {
       // Check if the vertical scroll position is greater than 0.
-      if(isScrolled){
-        
+      if (isScrolled) {
       }
       setIsScrolled(window.scrollY > 0);
     };
 
     // Add the scroll event listener to the window.
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     // Clean up the event listener when the component unmounts.
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -35,18 +35,20 @@ const Navbar = ({ userProfileImage = '/photo.jpg' }) => {
   // but we still need a ref for the Navbar to ensure clicks outside the entire navbar close the dropdown
   // if it's open. The ProfileDropdown will handle its own internal clicks.
   useEffect(() => {
-  const handleClickOutsideNavbar = (event: MouseEvent) => {
-    if (navbarRef.current && !navbarRef.current.contains(event.target as Node)) {
-      setIsDropdownOpen(false);
-    }
-  };
+    const handleClickOutsideNavbar = (event: MouseEvent) => {
+      if (
+        navbarRef.current &&
+        !navbarRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
 
-  document.addEventListener('mousedown', handleClickOutsideNavbar);
-  return () => {
-    document.removeEventListener('mousedown', handleClickOutsideNavbar);
-  };
-}, [navbarRef]);
-
+    document.addEventListener("mousedown", handleClickOutsideNavbar);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideNavbar);
+    };
+  }, [navbarRef]);
 
   return (
     // The header has a conditional background and shadow based on the scroll position.
@@ -66,11 +68,15 @@ const Navbar = ({ userProfileImage = '/photo.jpg' }) => {
           KG
         </div>
         <div className="flex flex-col">
-          <h1 className="text-lg font-bold text-gray-900 dark:text-gray-400">Kaustubh Gharat</h1>
+          <h1 className="text-lg font-bold text-gray-900 dark:text-gray-400">
+            Kaustubh Gharat
+          </h1>
           {/* The "Full Stack Developer" text is now in a button with a typing animation. */}
           <button className="flex items-center space-x-1 px-3 bg-gray-500 dark:bg-[#282a2c] rounded-full text-sm text-gray-500 dark:text-gray-500 font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200">
             <span className="typing-container">
-              <span className="typing-text border-r-2 border-transparent pr-1">Full Stack Developer</span>
+              <span className="typing-text border-r-2 border-transparent pr-1">
+                Full Stack Developer
+              </span>
             </span>
           </button>
         </div>
@@ -86,7 +92,9 @@ const Navbar = ({ userProfileImage = '/photo.jpg' }) => {
             <img
               src={userProfileImage}
               alt="User Profile"
-              className="w-full h-full object-cover cursor-pointer"
+              width={40}
+              height={40}
+              className="w-full h-full object-cover cursor-pointer rounded-full"
             />
             {/* The new pulsing animation dot */}
             <span className="absolute bottom-0 right-0 flex h-3 w-3">
