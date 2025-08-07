@@ -1,7 +1,10 @@
 "use client";
 import ChatInput from "@/components/ChatInput";
 import ChatMessages from "@/components/ChatMessages";
+import FakeMouseCursor from "@/components/FakeMouseCursor";
+
 import QuickPromptList from "@/components/QuickPromptList";
+import SplashCursor from "@/components/reactbits/SplashCursor";
 import WelcomeScreen from "@/components/WelcomeScreen";
 import React, { useState } from "react";
 
@@ -28,7 +31,7 @@ const ChatScreen = () => {
 
   return (
     <div className="relative w-full h-[450px] overflow-hidden transition-all duration-700 font-sans">
-      {/* Chat Messages Section */}
+      {!started && <SplashCursor/>}
       <div
         className={`transition-opacity duration-700 ease-in-out ${
           started ? "opacity-100" : "opacity-0 pointer-events-none"

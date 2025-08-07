@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 export default function WelcomeScreen() {
   const titleText = "Hello, I'm Kaustubh Gharat.";
-  const subheadingText = "I am a full stack developer. Explore my projects, skills and more.";
-  
-  const [typedTitle, setTypedTitle] = useState('');
-  const [typedSubheading, setTypedSubheading] = useState('');
+  const subheadingText =
+    "I am a full stack developer. Explore my projects, skills and more.";
+
+  const [typedTitle, setTypedTitle] = useState("");
+  const [typedSubheading, setTypedSubheading] = useState("");
   const [isTitleTypingFinished, setIsTitleTypingFinished] = useState(false);
 
   useEffect(() => {
@@ -22,9 +23,14 @@ export default function WelcomeScreen() {
 
   useEffect(() => {
     let subheadingTypingTimeout: NodeJS.Timeout;
-    if (isTitleTypingFinished && typedSubheading.length < subheadingText.length) {
+    if (
+      isTitleTypingFinished &&
+      typedSubheading.length < subheadingText.length
+    ) {
       subheadingTypingTimeout = setTimeout(() => {
-        setTypedSubheading(subheadingText.substring(0, typedSubheading.length + 1));
+        setTypedSubheading(
+          subheadingText.substring(0, typedSubheading.length + 1)
+        );
       }, 30); // Adjust typing speed here
     }
     return () => clearTimeout(subheadingTypingTimeout);
@@ -56,15 +62,21 @@ export default function WelcomeScreen() {
           {typedTitle}
           {!isTitleTypingFinished && <span className="typing-cursor"></span>}
         </h1>
-        <p className={`text-xl text-gray-400 ${isTitleTypingFinished ? 'visible' : 'invisible'}`}>
+        <p
+          className={`text-xl text-gray-400 ${
+            isTitleTypingFinished ? "visible" : "invisible"
+          }`}
+        >
           {typedSubheading}
-          {isTitleTypingFinished && typedSubheading.length < subheadingText.length && <span className="typing-cursor"></span>}
+          {isTitleTypingFinished &&
+            typedSubheading.length < subheadingText.length && (
+              <span className="typing-cursor"></span>
+            )}
         </p>
       </div>
     </div>
   );
 }
-
 
 //gradient code
 
@@ -73,7 +85,7 @@ export default function WelcomeScreen() {
 // export default function WelcomeScreen() {
 //   const titleText = "Hello, I'm Kaustubh Gharat.";
 //   const subheadingText = "I am a full stack developer. Explore my projects, skills and more.";
-  
+
 //   const [typedTitle, setTypedTitle] = useState('');
 //   const [typedSubheading, setTypedSubheading] = useState('');
 //   const [isTitleTypingFinished, setIsTitleTypingFinished] = useState(false);
@@ -133,8 +145,8 @@ export default function WelcomeScreen() {
 //       <div className="mb-15">
 //         <h1 className="text-5xl font-semibold mb-4 text-white">
 //           {typedTitle.split('').map((char, index) => (
-//             <span 
-//               key={index} 
+//             <span
+//               key={index}
 //               className={index === typedTitle.length - 1 && !isTitleTypingFinished ? 'gradient-text' : 'text-white'}
 //             >
 //               {char}
@@ -144,8 +156,8 @@ export default function WelcomeScreen() {
 //         </h1>
 //         <p className={`text-xl text-gray-400 ${isTitleTypingFinished ? 'visible' : 'invisible'}`}>
 //           {typedSubheading.split('').map((char, index) => (
-//             <span 
-//               key={index} 
+//             <span
+//               key={index}
 //               className={index === typedSubheading.length - 1 && isTitleTypingFinished ? 'gradient-text' : 'text-gray-400'}
 //             >
 //               {char}
