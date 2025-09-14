@@ -6,13 +6,12 @@ import {
   FiLinkedin,
   FiInstagram,
   FiGithub,
-  FiX, // For the close button
-  FiExternalLink, // For clickable indication
+  FiX,
+  FiExternalLink,
 } from "react-icons/fi";
 import { SiLeetcode } from "react-icons/si";
 import { DateTime } from "luxon";
 
-// Define props interface for the ProfileDropdown component
 interface ProfileDropdownProps {
   userProfileImage: string;
   isOpen: boolean;
@@ -24,7 +23,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
   isOpen,
   onClose,
 }) => {
-   const [timeInfo, setTimeInfo] = useState({ time: "", day: "" });
+  const [timeInfo, setTimeInfo] = useState({ time: "", day: "" });
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const contactInfo = {
@@ -71,97 +70,107 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
-        onClose(); // Call the onClose prop to close the dropdown
+        onClose();
       }
     };
-
-    // Add mousedown event listener to the document
     document.addEventListener("mousedown", handleClickOutside);
-
-    // Clean up the event listener
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [dropdownRef, onClose]);
 
- useEffect(() => {
+  useEffect(() => {
     const updateTime = () => {
       const now = DateTime.now().setZone("America/New_York");
       const time = now.toFormat("hh:mm a");
-      const day = now.toFormat("cccc"); // Full day name (e.g., Monday)
-
+      const day = now.toFormat("cccc");
       setTimeInfo({ time, day });
     };
 
     updateTime();
-    const interval = setInterval(updateTime, 1000); // Update every second
-
+    const interval = setInterval(updateTime, 1000);
     return () => clearInterval(interval);
   }, []);
 
-  if (!isOpen) {
-    return null;
-  }
+  if (!isOpen) return null;
 
   return (
     <div
       ref={dropdownRef}
-      className="absolute top-12 right-0 mt-2 w-80 bg-white dark:bg-[#282a2d] rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-5 text-center z-50"
+      className="
+        absolute top-12 right-0 mt-2 w-80 rounded-2xl p-5 text-center z-50
+        bg-white/40 border border-white/60 backdrop-blur-xl
+        shadow-[inset_0_1px_0px_rgba(255,255,255,0.7),0_4px_12px_rgba(0,0,0,0.1)]
+        before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-br before:from-white/60 before:via-transparent before:to-transparent before:pointer-events-none
+      "
     >
+      {/* Close Button */}
       <div className="absolute top-4 right-4">
         <button
           onClick={onClose}
-          className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
+          className="text-gray-500 hover:text-gray-800 transition-colors"
         >
-          <FiX className="h-5 w-5" /> {/* Using FiX for close button */}
+          <FiX className="h-5 w-5" />
         </button>
       </div>
+
+      {/* Profile Picture */}
       <div className="flex flex-col items-center">
-        <div className="relative w-20 h-20 rounded-full bg-pink-500 flex items-center justify-center text-4xl text-white font-bold mb-4 overflow-hidden">
+        <div className="relative w-20 h-20 rounded-full overflow-hidden shadow-md mb-4">
           <img
             src={userProfileImage}
             alt="User Profile"
             className="w-full h-full object-cover"
           />
         </div>
-        <p className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+        <p className="text-xl font-semibold text-gray-900">
           {contactInfo.greeting}
         </p>
+
         <a
           href={contactInfo.phone.link}
-          className="text-sm text-gray-500 dark:text-gray-400 mb-2 flex items-center justify-center gap-2 hover:underline"
+          className="text-sm text-gray-600 mb-2 flex items-center justify-center gap-2 hover:underline"
         >
-          <FiPhone className="h-4 w-4" /> {contactInfo.phone.number}{" "}
+          <FiPhone className="h-4 w-4" /> {contactInfo.phone.number}
           <FiExternalLink className="h-3 w-3 ml-1" />
         </a>
+
         <a
           href={contactInfo.email.link}
-          className="text-sm text-gray-500 dark:text-gray-400 mb-4 flex items-center justify-center gap-2 hover:underline"
+          className="text-sm text-gray-600 mb-4 flex items-center justify-center gap-2 hover:underline"
         >
-          <FiMail className="h-4 w-4" /> {contactInfo.email.address}{" "}
+          <FiMail className="h-4 w-4" /> {contactInfo.email.address}
           <FiExternalLink className="h-3 w-3 ml-1" />
         </a>
       </div>
 
+      {/* Resume Button */}
       <a
         href={contactInfo.resume.link}
         download
-        className="w-full py-2 px-4 rounded-full border border-gray-300 dark:border-gray-600 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 mb-4 flex items-center justify-center gap-2"
+        className="
+          w-full py-2 px-4 rounded-full border border-gray-300 text-sm font-medium text-gray-800
+          hover:bg-white/50 transition-colors duration-200 flex items-center justify-center gap-2
+        "
       >
         <FiDownload className="h-5 w-5" />
         {contactInfo.resume.label}
       </a>
 
-      <div className="flex flex-wrap justify-center gap-2 mb-4">
+      {/* Social Buttons */}
+      <div className="flex flex-wrap justify-center gap-2 mb-4 mt-4">
         {contactInfo.socials.map((social, index) => {
-          const Icon = social.icon; // Get the component from the object
+          const Icon = social.icon;
           return (
             <a
               key={index}
               href={social.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 min-w-[48%] flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gray-100 dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
+              className="
+                flex-1 min-w-[48%] flex items-center justify-center gap-2 py-3 px-4 rounded-xl
+                border border-gray-300 text-sm font-medium text-gray-800
+                backdrop-blur-sm
+                hover:bg-white/50 transition-colors duration-200
+              "
             >
               <Icon className="h-5 w-5" />
               {social.name}
@@ -169,8 +178,8 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
           );
         })}
       </div>
-
-      <div className="flex justify-center gap-4 text-xs text-gray-500 dark:text-gray-400 mt-4">
+      {/* Footer Time Info */}
+      <div className="flex justify-center gap-4 text-xs text-gray-500 mt-4">
         <span>{timeInfo.time}</span>
         <span>•</span>
         <span>{timeInfo.day}</span>

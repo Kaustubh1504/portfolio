@@ -58,12 +58,12 @@ export default function WelcomeScreen() {
         `}
       </style>
       <div className="mb-15">
-        <h1 className="text-5xl font-semibold mb-4 text-white">
+        <h1 className="text-5xl font-semibold mb-4 text-black">
           {typedTitle}
           {!isTitleTypingFinished && <span className="typing-cursor"></span>}
         </h1>
         <p
-          className={`text-xl text-gray-400 ${
+          className={`text-xl text-[#444746] ${
             isTitleTypingFinished ? "visible" : "invisible"
           }`}
         >

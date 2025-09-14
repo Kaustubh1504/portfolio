@@ -1,8 +1,6 @@
 "use client";
 import ChatInput from "@/components/ChatInput";
 import ChatMessages from "@/components/ChatMessages";
-import FakeMouseCursor from "@/components/FakeMouseCursor";
-
 import QuickPromptList from "@/components/QuickPromptList";
 import SplashCursor from "@/components/reactbits/SplashCursor";
 import WelcomeScreen from "@/components/WelcomeScreen";
@@ -10,39 +8,52 @@ import React, { useState } from "react";
 
 const ChatScreen = () => {
   const [started, setStarted] = useState(false);
-  const [inputMessage, setInputMessage] = useState(""); // typing
-  const [displayMessage, setDisplayMessage] = useState(""); // sent message
+  const [inputMessage, setInputMessage] = useState("");
+  const [displayMessage, setDisplayMessage] = useState("");
 
   const handleSend = () => {
     if (inputMessage.trim()) {
       console.log("Message sent:", inputMessage);
       setDisplayMessage(inputMessage);
       setStarted(true);
-      setInputMessage(""); // reset input
+      setInputMessage("");
     }
   };
 
   const handlePromptClick = (msg: string) => {
     setDisplayMessage(msg);
-    setInputMessage(""); // optional: reset input
+    setInputMessage("");
     setStarted(true);
     console.log("Message sent:", msg);
   };
 
   return (
-    <div className="relative w-full h-[450px] overflow-hidden transition-all duration-700 font-sans">
+    <div className="relative w-full h-[680px] overflow-hidden font-sans">
       {!started && (
         <div className="absolute inset-0 z-0 pointer-events-none">
           <SplashCursor />
         </div>
       )}
+
+      {/* Main chat container that aligns everything */}
       <div
-        className={`transition-opacity duration-700 ease-in-out ${
+        className={`w-full h-full flex flex-col justify-between p-4 mx-auto transition-all duration-700 ease-in-out ${
           started ? "opacity-100" : "opacity-0 pointer-events-none"
-        } absolute top-0 left-0 w-full pt-4 px-4 overflow-y-auto`}
+        }`}
       >
-        <div className="justify-center items-center text-center text-red-500 mt-10">
+        {/* Chat Messages Section */}
+        <div className="flex-1 w-[800px] max-w-4xl mx-auto overflow-y-auto">
           <ChatMessages message={displayMessage} />
+        </div>
+        
+        {/* Chat Input Section */}
+        <div className="w-[800px] max-w-4xl mx-auto bg-transparent">
+          <QuickPromptList onPromptClick={handlePromptClick} />
+          <ChatInput
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            onSend={handleSend}
+          />
         </div>
       </div>
 
@@ -55,28 +66,14 @@ const ChatScreen = () => {
         }`}
       >
         <WelcomeScreen />
-        <ChatInput
-          value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
-          onSend={handleSend}
-        />
+        <div className="w-[800px] max-w-4xl">
+          <ChatInput
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            onSend={handleSend}
+          />
+        </div>
         <QuickPromptList onPromptClick={handlePromptClick} />
-      </div>
-
-      {/* ChatInput Fixed at Bottom */}
-      <div
-        className={`transition-all duration-700 ease-in-out ${
-          started
-            ? "opacity-100 bottom-4"
-            : "opacity-0 -bottom-20 pointer-events-none"
-        } fixed left-1/2 transform -translate-x-1/2 w-[90%] max-w-xl`}
-      >
-        <QuickPromptList onPromptClick={handlePromptClick} />
-        <ChatInput
-          value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
-          onSend={handleSend}
-        />
       </div>
     </div>
   );

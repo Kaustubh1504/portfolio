@@ -28,7 +28,7 @@ export default function ClientRootLayout({
                     onMouseLeave={() => setIsHovered(false)}
                 />
 
-                <div className={`flex-1 transition-all duration-300 ease-in-out ${isSidebarOpen ? 'ml-64' : 'ml-16'}`}>
+                <div className={`flex-1 transition-all duration-300 ease-in-out bg-white ${isSidebarOpen ? 'ml-64' : 'ml-16'}`}>
                     <Navbar />
                     <main className="flex-1 min-h-0 flex flex-col p-6 overflow-hidden">
                         {children}

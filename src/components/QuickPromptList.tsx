@@ -71,12 +71,12 @@ const chipData = [
 const QuickPromptList: React.FC<QuickPromptListProps> = ({ onPromptClick }) =>  {
   const [showMore, setShowMore] = useState(false);
 
-  const visibleChips = chipData.slice(0, 4);
-  const moreChips = chipData.slice(4);
+  const visibleChips = chipData.slice(0, 5);
+  const moreChips = chipData.slice(5);
 
   return (
-    <div className="flex flex-col items-center p-4">
-      <div className="flex flex-wrap gap-2 w-[780px] justify-center p-2">
+    <div className="flex flex-col items-center p-2 bg-transparent">
+      <div className="flex flex-wrap gap-2 w-[1200px] justify-center">
       {[...visibleChips, ...(showMore ? moreChips : [])].map((chip, index) => (
         <QuickLinkChip
           key={index}
