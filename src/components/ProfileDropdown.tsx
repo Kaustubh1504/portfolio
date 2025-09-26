@@ -29,8 +29,8 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
   const contactInfo = {
     greeting: "Hello there!",
     phone: {
-      number: "+918766998642",
-      link: "tel:+918766998642",
+      number: "+18573796431",
+      link: "tel:+18573796431",
     },
     email: {
       address: "kaustubhgharat06@gmail.com",

@@ -43,7 +43,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
         <p className="text-gray-200 text-sm mb-3">{description}</p>
 
         {/* Follow Button */}
-        <a href={"tel:+918766998642"}>
+        <a href={"tel:+18573796431"}>
           <button className="bg-white/20 hover:bg-white/30 text-white font-semibold py-2 px-6 rounded-full transition-colors duration-300 border border-white/30 cursor-pointer mr-1">
             <FiPhone className="h-4 w-4" />
           </button>
