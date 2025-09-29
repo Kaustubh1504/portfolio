@@ -25,7 +25,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
 
       {/* Overlay with gradient and blur effect */}
       <div
-        className="absolute bottom-0 w-full h-2/3 pt-24 p-4 text-white
+        className="absolute bottom-0 w-full h-7/13 pt-24 p-4 text-white
                    backdrop-blur-lg bg-gradient-to-t from-black/50 to-transparent
                    [mask-image:linear-gradient(to_top,black_60%,transparent_100%)]"
       >

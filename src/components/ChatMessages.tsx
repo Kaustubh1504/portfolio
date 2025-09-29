@@ -43,56 +43,56 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ message }) => {
       keywords: ["experience", "work history"],
       component: <Experience />,
       question: "Can you show me your work experience?",
-      reply: "Here's your professional experience and work history.",
+      reply: "",
     },
     {
       keywords: ["project", "projects"],
       component: <Projects />,
       question: "What projects have you worked on?",
-      reply: "Here are some of your highlighted projects.",
+      reply: "",
     },
     {
       keywords: ["skills", "technologies"],
       component: <Skills />,
       question: "What skills and technologies do you have?",
-      reply: "These are the skills you've listed in your portfolio.",
+      reply: "",
     },
     {
       keywords: ["research", "publication", "research and publication"],
       component: <ResearchAndPublication />,
       question: "Can you share your research and publications?",
-      reply: "Here’s a list of your research papers and publications.",
+      reply: "",
     },
     {
       keywords: ["awards", "achievements", "awards and achievements"],
       component: <AwardsAndAchievements />,
       question: "What awards and achievements have you received?",
-      reply: "Here’s a list of your awards and achievements.",
+      reply: "",
     },
     {
       keywords: ["education", "academics"],
       component: <Education />,
       question: "What is your educational background?",
-      reply: "Here’s your educational background.",
+      reply: "",
     },
     {
       keywords: ["recommendation", "testimonials"],
       component: <Recommendations />,
       question: "Do you have any recommendations or testimonials?",
-      reply: "These are testimonials and recommendations you've received.",
+      reply: "",
     },
     {
       keywords: ["hobbies", "interests"],
       component: <Hobbies />,
       question: "What are your hobbies or interests?",
-      reply: "Here are some of your hobbies and interests.",
+      reply: "",
     },
     {
       keywords: ["contact", "get in touch"],
       component: <Contact />,
       question: "How can I get in touch with you?",
       reply:
-        "Here are your contact details.\n\nEmail: contact@example.com\nPhone: 123-456-7890",
+        "",
     },
   ];
 
@@ -142,7 +142,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ message }) => {
   }, [message]);
 
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex justify-center flex-1">
       <div className="flex flex-col gap-1 w-[800px]">
         {/* The LoadingBubble is now a permanent component */}
         {/* User message */}
@@ -160,14 +160,14 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ message }) => {
 
         {/* Portfolio component */}
         {componentToShow && (
-          <div className="flex flex-row items-start">
+          <div className="flex flex-row items-start ">
             {/* Loading bubble at the start */}
             <div className="">
               <LoadingBubble />
             </div>
 
             {/* Main content */}
-            <div className="flex flex-col">
+            <div className="flex flex-col flex-1">
               <div>{componentToShow}</div>
               {chatReply?.length > 0 && <ChatReplyBubble reply={chatReply} />}
             </div>

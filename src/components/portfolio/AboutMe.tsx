@@ -5,7 +5,7 @@ const AboutMe = () => {
   const profileData = {
     name: "Kaustubh Gharat",
     title: "Software Engineer",
-    bio: "Passionate about building beautiful and functional web applications with React and Next.js.",
+    bio: "",
     avatarUrl: "/photo.jpg",
     intro: "Hello! 👋 I'm a recent engineering graduate from Mumbai with a passion for turning creative ideas into reality. 🚀\n\nMy journey has involved making financial software ::more user-friendly:: at Oracle, and contributing to an ::innovative project:: that uses drones 🚁 to monitor crop health for farmers. I thrive on unique challenges, like helping build an app for a Hollywood director that brings true crime stories to life through ::immersive augmented reality::.\nUltimately, I'm driven to build things that solve real-world problems and create ::meaningful experiences:: for people. ✨"
   };

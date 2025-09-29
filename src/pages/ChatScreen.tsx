@@ -28,7 +28,7 @@ const ChatScreen = () => {
   };
 
   return (
-    <div className="relative w-full h-[680px] overflow-hidden font-sans">
+    <div className="relative w-full h-[820px] overflow-hidden font-sans">
       {!started && (
         <div className="absolute inset-0 z-0 pointer-events-none">
           <SplashCursor />
