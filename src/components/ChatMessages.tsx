@@ -17,6 +17,12 @@ interface ChatMessagesProps {
   formattedMessage?: string; // optional: proper question to show instead of raw keyword
 }
 
+// Match whole words only, so "me" doesn't match inside "achievements"
+const matchesKeyword = (text: string, keyword: string) => {
+  const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`\\b${escaped}\\b`, "i").test(text);
+};
+
 const ChatMessages: React.FC<ChatMessagesProps> = ({ message }) => {
   const [loading, setLoading] = useState(false);
   const [componentToShow, setComponentToShow] = useState<React.ReactNode>(null);
@@ -104,7 +110,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ message }) => {
       // Set formatted message immediately (outside the timer)
       const lower = message.toLowerCase();
       const entry = componentMap.find((item) =>
-        item.keywords.some((kw) => lower.includes(kw))
+        item.keywords.some((kw) => matchesKeyword(lower, kw))
       );
 
       if (entry) {
@@ -118,7 +124,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ message }) => {
         let found = false;
 
         for (const entry of componentMap) {
-          if (entry.keywords.some((kw) => lower.includes(kw))) {
+          if (entry.keywords.some((kw) => matchesKeyword(lower, kw))) {
             setComponentToShow(entry.component);
             setChatReply(entry.reply);
 

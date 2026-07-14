@@ -6,7 +6,7 @@ import {
 
 
 import { FiUser, FiBriefcase, FiFolder, FiAward, FiBookOpen, FiSmile, FiMail } from "react-icons/fi";
-import { AiOutlineBulb, AiOutlineStar } from "react-icons/ai";
+import { AiOutlineBulb } from "react-icons/ai";
 import { FaGraduationCap } from "react-icons/fa";
 import QuickLinkChip from "./QuickLinkChip";
 
@@ -49,11 +49,6 @@ const chipData = [
     icon: FaGraduationCap,
     text: "Education",
     color: "text-yellow-500",
-  },
-  {
-    icon: AiOutlineStar,
-    text: "Recommendations",
-    color: "text-rose-500",
   },
   {
     icon: FiSmile,

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 export default function WelcomeScreen() {
   const titleText = "Hello, I'm Kaustubh Gharat.";
   const subheadingText =
-    "I am a full stack developer. Explore my projects, skills and more.";
+    "MS CS student at Northeastern, previously at Oracle. I build full-stack apps, ML systems, and AI agents.";
 
   const [typedTitle, setTypedTitle] = useState("");
   const [typedSubheading, setTypedSubheading] = useState("");

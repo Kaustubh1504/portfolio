@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // --- Icons ---
 const MailIcon = () => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>;
@@ -9,6 +9,36 @@ const GitHubIcon = () => <svg fill="currentColor" viewBox="0 0 24 24"><path d="M
 
 
 const Contact = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+
+  const mailtoHref = `mailto:kaustubhgharat06@gmail.com?subject=${encodeURIComponent(
+    subject || 'Hello from your portfolio'
+  )}&body=${encodeURIComponent(`${message}\n\n${name}${email ? ` (${email})` : ''}`)}`;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('sending');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, subject, message }),
+      });
+      if (!res.ok) throw new Error('send failed');
+      setStatus('sent');
+      setName('');
+      setEmail('');
+      setSubject('');
+      setMessage('');
+    } catch {
+      setStatus('error');
+    }
+  };
+
   return (
     <section id="contact" className="bg-white pt-3">
       <div className="max-w-7xl mx-auto">
@@ -31,38 +61,54 @@ const Contact = () => {
               </div>
               <div className="flex items-center gap-4 text-gray-700">
                 <LocationIcon />
-                <span>Boston, MA, USA</span>
+                <span>Sunnyvale, CA, USA</span>
               </div>
             </div>
             <div className="mt-8 flex space-x-4">
-                <a href="#" className="text-gray-500 hover:text-blue-700"><LinkedInIcon /></a>
-                <a href="#" className="text-gray-500 hover:text-gray-900"><GitHubIcon /></a>
+                <a href="https://www.linkedin.com/in/kaustubh-gharat-6045b7208/" target="_blank" rel="noopener noreferrer" title="LinkedIn" className="w-6 h-6 text-gray-500 hover:text-blue-700"><LinkedInIcon /></a>
+                <a href="https://github.com/Kaustubh1504" target="_blank" rel="noopener noreferrer" title="GitHub" className="w-6 h-6 text-gray-500 hover:text-gray-900"><GitHubIcon /></a>
             </div>
           </div>
 
           {/* Right Side: Contact Form */}
           <div>
-            <form action="#" method="POST" className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full Name</label>
-                <input type="text" name="name" id="name" defaultValue="Alex Doe" className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+                <input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" required className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
-                <input type="email" name="email" id="email" defaultValue="alex.doe@example.com" className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+                <input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
               </div>
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium text-gray-700">Subject</label>
-                <input type="text" name="subject" id="subject" defaultValue="Collaboration Opportunity" className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+                <input type="text" name="subject" id="subject" value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="What is this about?" className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
               </div>
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
-                <textarea name="message" id="message" rows={4} defaultValue="Hello, I came across your portfolio and was very impressed. I'd love to discuss a potential project." className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
+                <textarea name="message" id="message" rows={4} value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Write your message here..." required className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
               </div>
               <div>
-                <button type="submit" className="w-full inline-flex justify-center py-3 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                  Send Message
+                <button
+                  type="submit"
+                  disabled={status === 'sending'}
+                  className="w-full inline-flex justify-center py-3 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {status === 'sending' ? 'Sending...' : 'Send Message'}
                 </button>
+                {status === 'sent' && (
+                  <p className="mt-3 text-sm text-green-600">Message sent. I will get back to you soon.</p>
+                )}
+                {status === 'error' && (
+                  <p className="mt-3 text-sm text-red-600">
+                    Something went wrong.{' '}
+                    <a href={mailtoHref} className="underline hover:text-red-700">
+                      Email me directly
+                    </a>{' '}
+                    instead.
+                  </p>
+                )}
               </div>
             </form>
           </div>

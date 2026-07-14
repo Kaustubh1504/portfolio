@@ -7,6 +7,7 @@ interface ExperienceItem {
   date: string;
   title: string;
   company: string;
+  companyUrl?: string;
   location: string;
   logo: string;
   description: string[];
@@ -17,58 +18,80 @@ interface ExperienceItem {
 const experienceData: ExperienceItem[] = [
   {
     id: 1,
-    date: "July 2025 – Present",
-    title: "Research Assistant",
-    company: "Barabási Lab, Northeastern University",
+    date: "July 2025 - Present",
+    title: "Part-time Research Assistant",
+    company: "Network Science Institute, Northeastern University (Barabasi Lab)",
+    companyUrl: "https://www.barabasilab.com/",
     location: "Boston, USA",
     logo: "./NU_RGB_seal_R.png",
     description: [
-      "Verified LLM annotations with Prodigy to construct a high-quality dataset for biomedical NER.",
-      "Fine-tuned SciBERT to improve recognition of BioTool mentions across large-scale document corpora."
+      "Fine-tuned SciBERT for biomedical NER in PyTorch; 90%+ precision on a 1M-document corpus.",
+      "Built a GPT-4 evaluation pipeline with fuzzy matching to score extracted entities; precision 89%.",
+      "Wrote the Python pipeline that runs GPT-4 over 1M+ documents and joins results.",
+      "Built the React app for side-by-side prompt comparison and annotation review.",
+      "Verified LLM annotations in Prodigy to build the gold-standard biomedical NER dataset."
     ],
-    skills: ["Prodigy", "SciBERT", "Biomedical NER", "LLM", "NLP", "Deep Learning"],
+    skills: ["PyTorch", "SciBERT", "Biomedical NER", "GPT-4", "NLP", "Prodigy", "React", "Python", "Slurm"],
   },
   {
     id: 2,
-    date: "July 2024 – August 2025",
-    title: "Associate Application Developer",
-    company: "Oracle Financial Services Software",
+    date: "July 2024 - Aug 2025",
+    title: "Software Developer",
+    company: "Oracle",
+    companyUrl: "https://www.oracle.com/",
     location: "Mumbai, India",
     logo: "oracle-logo.png",
     description: [
-      "Engineered 20+ UI screens using JavaScript, OJET, and an internal UI toolkit, cutting development time by 50%.",
-      "Architected a microservices-based product bundling system with Netflix Conductor, SpringBoot, Java, and Oracle DB.",
-      "Leveraged Oracle Code Assist to enhance productivity by 15% and improve code quality by 20%.",
-      "Reduced API response time by 10% through JMeter and deployed applications using Jenkins and WebLogic.",
-      "Processed financial documents for LLM training and presented demos to product managers."
+      "Built 20+ UI screens in JavaScript and OJET; cut dev time by 50% with a reusable component set the team adopted.",
+      "One of the engineers on the product bundling service; wrote the Conductor workflow plus Spring Boot endpoints tying pricing and inventory together, backed by Oracle DB.",
+      "Processed financial documents for LLM training pipelines; worked on the Spring Boot microservices that fed them.",
+      "Profiled API endpoints in JMeter and cut response time by 10%; deployed through Jenkins to WebLogic.",
+      "Shipped features in biweekly sprints; used Oracle Code Assist to boost productivity by 15%.",
+      "Validated test cases in Rancher; contributed to regionalization and localization features."
     ],
-    skills: ["JavaScript", "OJET", "SpringBoot", "Java", "Oracle DB", "Netflix Conductor", "Microservices", "Jenkins", "JMeter", "WebLogic", "Agile", "Jira"],
+    skills: ["JavaScript", "OJET", "Java", "Spring Boot", "Oracle DB", "Conductor", "Microservices", "Jenkins", "JMeter", "WebLogic", "Rancher", "Agile"],
   },
   {
     id: 3,
-    date: "Dec 2023 – May 2025",
+    date: "Dec 2023 - May 2025",
     title: "Software Developer",
     company: "Web3Dao",
     location: "Cape Town, South Africa (Remote)",
     logo: "web3dao.jpeg",
     description: [
-      "Launched 2 mobile apps using React Native and Firebase, integrating SteamSDK, 8thWall (AR), Stripe, and RevenueCat.",
-      "Developed automation systems including a Selenium bot generating 100+ tweets/day and an LLM-powered news pipeline."
+      "Shipped 2 mobile apps in React Native with Firebase, integrating SteamSDK, 8thWall AR, Stripe, and RevenueCat.",
+      "Built a Selenium bot that posts 100+ tweets a day and an LLM-driven news pipeline."
     ],
     skills: ["React Native", "Firebase", "SteamSDK", "8thWall", "AR", "Stripe", "RevenueCat", "Selenium", "LLM"],
   },
   {
     id: 4,
-    date: "Jan 2024 – Jun 2024",
+    date: "Jan 2024 - June 2024",
     title: "Software Developer Intern",
-    company: "Kifayti Health Co-op",
-    location: "Bangalore, India",
+    company: "Kifayti Health",
+    location: "Bangalore, India (Remote)",
     logo: "kifayti-health.jpeg",
     description: [
-      "Built a full-stack application with React, Node.js & MariaDB, improving response time by 30% via API & query optimization.",
-      "Deployed and maintained scalable AWS infrastructure using EC2 and RDS."
+      "Built a full-stack web app on React, Node.js, and MariaDB.",
+      "Optimized APIs and the queries behind them; response time improved by 30%.",
+      "Set up and maintained the AWS infrastructure on EC2 and RDS."
     ],
     skills: ["React", "Node.js", "MariaDB", "AWS", "EC2", "RDS", "API Optimization"],
+  },
+  {
+    id: 5,
+    date: "July 2023 - Sept 2023",
+    title: "Research Intern",
+    company: "IIT Patna",
+    companyUrl: "https://www.iitp.ac.in/",
+    location: "Remote",
+    logo: "https://placehold.co/80x80/1E3A8A/FFFFFF?text=IITP&font=sans",
+    description: [
+      "Modified YOLO with custom layer optimizations for better feature extraction.",
+      "Raised detection to 86.1% mAP@0.5 (3.1 points over baseline) with multi-scale fusion and Wise IOU.",
+      "Quantized the model for faster inference on edge hardware."
+    ],
+    skills: ["Computer Vision", "YOLO", "Deep Learning", "Model Quantization", "Edge ML"],
   }
 ];
 
@@ -115,7 +138,19 @@ const Experience: React.FC = () => {
                     </div>
                     <div className="flex justify-between items-center mb-3 cursor-pointer" onClick={() => toggleDescription(job.id)}>
                       <p className="text-md font-semibold text-gray-700">
-                        {job.company} &middot; <span className="font-normal italic text-gray-500">{job.location}</span>
+                        {job.companyUrl ? (
+                          <a
+                            href={job.companyUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="hover:text-blue-600 hover:underline"
+                          >
+                            {job.company}
+                          </a>
+                        ) : (
+                          job.company
+                        )} &middot; <span className="font-normal italic text-gray-500">{job.location}</span>
                       </p>
                       <svg className={`w-5 h-5 text-gray-500 transition-transform transform ${expandedDescriptions[job.id] ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
